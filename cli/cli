@@ -1,0 +1,11 @@
+#ifndef CLI_CLI_HPP
+#define CLI_CLI_HPP
+
+#include "include/arguments.hpp"
+#include "include/command_line.hpp"
+#include "include/default_parser.hpp"
+#include "include/flag.hpp"
+#include "include/flags.hpp"
+#include "include/parser.hpp"
+
+#endif // CLI_CLI_HPP
