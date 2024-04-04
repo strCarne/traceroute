@@ -1,0 +1,6 @@
+#ifndef TRACEROUTE_NET
+#define TRACEROUTE_NET
+
+#include "include/tracer.hpp"
+
+#endif // TRACEROUTE_NET

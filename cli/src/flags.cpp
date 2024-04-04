@@ -51,6 +51,9 @@ std::string Flags::FormUsage() const {
     out << '-' << flag.short_name();
     out << ", --" << flag.long_name();
     out << ": " << flag.usage();
+    if (flag.required()) {
+      out << " [REQUIRED]";
+    }
     out << '\n';
   }
 

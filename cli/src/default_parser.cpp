@@ -66,7 +66,6 @@ CommandLine DefaultParser::Parse(Arguments const &args, Flags const &flags) {
   for (Flag const &f : flags.flags_) {
     if (!parsed_flags.HasLongName(f.long_name())) {
       if (f.required()) {
-        std::cout << "WATAFAK " + f.long_name() + "\n";
         throw "err: couldn't find required flag" + f.long_name() + "\n";
       }
       parsed_flags.Add(f);

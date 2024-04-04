@@ -1,0 +1,6 @@
+#ifndef TRACEROUTE_INTERNAL
+#define TRACEROUTE_INTERNAL
+
+#include "include/conversion.hpp"
+
+#endif
