@@ -1,11 +1,13 @@
 #include "tracer.hpp"
+#include <netdb.h>
+#include <sstream>
 
 namespace traceroute::net {
 
 Tracer::Tracer(int max_ttl, int timeout, int attempts_num)
     : max_ttl_(max_ttl), timeout_(timeout), attempts_num_(attempts_num) {}
 
-Tracer::Tracer() : Tracer(64, 3000, 3) {}
+Tracer::Tracer() : Tracer(kDefaultTTL, kDefaultTimeout, kDefaultAttemptsNum) {}
 
 void Tracer::Trace(std::string const &host, std::ostream &out) {
   Randomizer randomizer;
@@ -17,6 +19,10 @@ void Tracer::Trace(std::string const &host, std::ostream &out) {
                         &dns_lookup_res);
   if (err == -1) {
     out << strerror(errno) << '\n';
+    return;
+  }
+  if (dns_lookup_res == nullptr) {
+    out << "couldn't resolve domain name " << host << '\n';
     return;
   }
 
@@ -51,9 +57,6 @@ void Tracer::Trace(std::string const &host, std::ostream &out) {
   char ip_current[INET_ADDRSTRLEN];
   char host_current[NI_MAXHOST];
 
-  out << "Maximum TTL: " << max_ttl_ << '\n';
-  out << "Maximum respond time: " << timeout_ << "ms\n";
-  out << "Connection attempts number: " << attempts_num_ << "\n\n";
   out << "Your destination is " << ip_destination << " (" << host << ").\n";
 
   sockaddr last_addr{};
@@ -108,6 +111,22 @@ void Tracer::Trace(std::string const &host, std::ostream &out) {
     out << '\n';
     curr_ttl++;
   }
+}
+
+void Tracer::set_max_ttl(int max_ttl) { max_ttl_ = max_ttl; }
+
+void Tracer::set_timeout(int timeout) { timeout_ = timeout; }
+
+void Tracer::set_attempts_num(int attempts_num) {
+  attempts_num_ = attempts_num;
+}
+
+std::string Tracer::Settings() {
+  std::stringstream out;
+  out << "Maximum TTL: " << max_ttl_ << '\n';
+  out << "Maximum respond time: " << timeout_ << "ms\n";
+  out << "Connection attempts number: " << attempts_num_ << "\n\n";
+  return out.str();
 }
 
 } // namespace traceroute::net

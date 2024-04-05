@@ -1,8 +1,6 @@
 #ifndef TRACEROUTE_FLAGS_USAGES_HPP
 #define TRACEROUTE_FLAGS_USAGES_HPP
 
-#define HOST_FLAG_USAGE "specify host domain name"
-
 #define MAX_HOPS_USAGE "specify max number of hops to destination"
 
 #define RETRY_TIMEOUT_USAGE                                                         \
